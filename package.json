@@ -1,4 +1,6 @@
 {
+  "name": "nuxt-docker",
+  "contributors": ["Govind"],
   "private": true,
   "scripts": {
     "build": "nuxt build",
