@@ -18,4 +18,4 @@ docker run --rm -d -p 8080:8080/tcp nuxtdocker:latest
 ```
 
 
-Check out the [steps to dockerize nuxt](https://nuxt.com/articles/deploying-nuxt-3-ssr-webapp-with-docker/) for more information.
+Check out the [steps to dockerize nuxt](https://towardsserverless.com/articles/deploying-nuxt-3-ssr-webapp-with-docker/) for more information.
