@@ -1,19 +1,19 @@
 FROM node:18-alpine3.17 as build
 
-# update and install the latest dependencies
-# Add non root user to the docker image and set the user
-RUN apk update && apk upgrade && adduser -D nuxtuser
-
-USER nuxtuser
+# update and install the latest dependencies for the alpine version
+RUN apk update && apk upgrade
 
 # set work dir as app
 WORKDIR /app
 # copy the nuxt project content with proper permission for the user nuxtuser
-COPY --chown=nuxtuser:nuxtuser . /app
-# COPY . ./
+COPY package* ./
+#COPY --chown=nuxtuser:nuxtuser package.json package-lock.json ./
 # install all the project npm dependencies
+RUN  npm install
+# copy all other project files to working directory
+COPY . ./
 # build the nuxt project to generate the artifacts in .output directory
-RUN npm install && npx nuxt build
+RUN npx nuxt build
 
 # we are using multi stage build process to keep the image size as small as possible
 FROM node:18-alpine3.17
@@ -31,7 +31,7 @@ COPY --chown=nuxtuser:nuxtuser --from=build /app/.output ./
 # expose 8080 on container
 EXPOSE 8080
 
-# set app host and port . In nuxt 3 this is based on nitor and you can read
+# set app host and port . In nuxt 3 this is based on nitro and you can read
 #more on this https://nitro.unjs.io/deploy/node#environment-variables
 ENV HOST=0.0.0.0 PORT=8080 NODE_ENV=production
 # start the app with dumb init to spawn the Node.js runtime process
