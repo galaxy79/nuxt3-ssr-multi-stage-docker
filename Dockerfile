@@ -5,9 +5,8 @@ RUN apk update && apk upgrade
 
 # set work dir as app
 WORKDIR /app
-# copy the nuxt project content with proper permission for the user nuxtuser
+# copy the nuxt project package json and package json lock if available 
 COPY package* ./
-#COPY --chown=nuxtuser:nuxtuser package.json package-lock.json ./
 # install all the project npm dependencies
 RUN  npm install
 # copy all other project files to working directory
